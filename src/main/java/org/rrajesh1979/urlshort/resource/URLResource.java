@@ -1,9 +1,7 @@
 package org.rrajesh1979.urlshort.resource;
 
-import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.result.UpdateResult;
-import org.bson.codecs.jsr310.LocalDateTimeCodec;
 import org.bson.types.ObjectId;
 import org.rrajesh1979.urlshort.model.URLRecord;
 import org.rrajesh1979.urlshort.service.URLService;
@@ -18,13 +16,14 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping( "${api.default.path}" )
 public class URLResource {
     private static final String ACCEPT_APPLICATION_JSON = "Accept=application/json";
 
-    public URLService urlService;
+    public final URLService urlService;
 
     @Autowired
     public URLResource(URLService urlService) {
@@ -114,7 +113,7 @@ public class URLResource {
         Map<String, Object> response = new HashMap<>();
         if (result != null) {
             response.put("status", "success");
-            response.put("data", result.getInsertedId().toString());
+            response.put("data", Objects.requireNonNull(result.getInsertedId()).toString());
         } else {
             response.put("status", "error");
             response.put("data", "URL not created");

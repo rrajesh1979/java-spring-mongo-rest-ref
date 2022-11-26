@@ -1,11 +1,9 @@
 package org.rrajesh1979.urlshort.service;
 
-import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.result.UpdateResult;
 import org.rrajesh1979.urlshort.model.URLRecord;
 import org.rrajesh1979.urlshort.repository.URLRepository;
-import org.rrajesh1979.urlshort.utils.ShortenURL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -58,10 +56,10 @@ public class URLService {
 
     //FindURLByShortURL
     public URLRecord findURLByShortURL(String shortURL) {
-        List<URLRecord> urls = new ArrayList<>();
+        List<URLRecord> urls;
         try {
             urls = urlRepository.findByShortURL(shortURL);
-            if (urls.size() >= 1) {
+            if (!urls.isEmpty()) {
                 return urls.get(0);
             }
         } catch (Exception e) {
@@ -81,8 +79,7 @@ public class URLService {
 
     //DeleteURL
     public Long deleteURL(String shortURL) {
-        Long deletedCount = urlRepository.deleteByShortURL(shortURL);
-        return deletedCount;
+        return urlRepository.deleteByShortURL(shortURL);
     }
 
     //UpdateURL

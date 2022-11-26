@@ -1,6 +1,5 @@
 package org.rrajesh1979.urlshort.utils;
 
-import com.google.common.hash.HashCode;
 import com.google.common.hash.Hashing;
 
 import java.math.BigInteger;

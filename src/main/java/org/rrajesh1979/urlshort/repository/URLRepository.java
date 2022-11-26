@@ -1,8 +1,5 @@
 package org.rrajesh1979.urlshort.repository;
 
-import com.mongodb.client.result.DeleteResult;
-import com.mongodb.client.result.InsertOneResult;
-import com.mongodb.client.result.UpdateResult;
 import org.bson.types.ObjectId;
 import org.rrajesh1979.urlshort.model.URLRecord;
 import org.springframework.data.domain.Page;
