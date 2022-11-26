@@ -23,6 +23,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.modelmapper:modelmapper:3.1.0")
+    implementation("com.google.guava:guava:31.1-jre")
     compileOnly("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     annotationProcessor("org.projectlombok:lombok")

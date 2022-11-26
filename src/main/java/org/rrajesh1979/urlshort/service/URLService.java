@@ -1,43 +1,122 @@
 package org.rrajesh1979.urlshort.service;
 
+import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.InsertOneResult;
+import com.mongodb.client.result.UpdateResult;
 import org.rrajesh1979.urlshort.model.URLRecord;
 import org.rrajesh1979.urlshort.repository.URLRepository;
+import org.rrajesh1979.urlshort.utils.ShortenURL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
+import org.springframework.data.mongodb.core.query.Query;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class URLService {
-    public URLRepository urlRepository;
+    public final URLRepository urlRepository;
+    public final MongoTemplate mongoTemplate;
 
     @Autowired
-    public URLService(URLRepository urlRepository) {
+    public URLService(URLRepository urlRepository, MongoTemplate mongoTemplate) {
         this.urlRepository = urlRepository;
+        this.mongoTemplate = mongoTemplate;
     }
 
-    public ResponseEntity<Map<String, Object>> getAllURLs(int page, int limit) {
+    public List<URLRecord> getAllURLs(int page, int limit) {
+        List<URLRecord> urls = new ArrayList<>();
         try {
-            List<URLRecord> urls = new ArrayList<URLRecord>();
             Pageable paging = PageRequest.of(page, limit);
             Page<URLRecord> pageURLs = urlRepository.findAll(paging);
             urls = pageURLs.getContent();
-            Map<String, Object> response = new HashMap<>();
-            response.put("data", urls);
-            response.put("results", urls.stream().count());
-            response.put("status", "success");
 
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            return urls;
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return urls;
         }
     }
+
+    //FindURLsByUserID
+    public List<URLRecord> findURLsByUserID(String userID, int page, int limit) {
+        List<URLRecord> urls = new ArrayList<>();
+        try {
+            Pageable paging = PageRequest.of(page, limit);
+            urls = urlRepository.findByUserID(userID, paging);
+            return urls;
+        } catch (Exception e) {
+            return urls;
+        }
+    }
+
+    //FindURLByShortURL
+    public URLRecord findURLByShortURL(String shortURL) {
+        List<URLRecord> urls = new ArrayList<>();
+        try {
+            urls = urlRepository.findByShortURL(shortURL);
+            if (urls.size() >= 1) {
+                return urls.get(0);
+            }
+        } catch (Exception e) {
+            return null;
+        }
+        return null;
+    }
+
+    //FindOneAndUpdate increment redirects
+    public URLRecord findOneAndUpdate(String shortURL) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("shortURL").is(shortURL));
+        Update update = new Update();
+        update.inc("redirects", 1);
+        return mongoTemplate.findAndModify(query, update, URLRecord.class);
+    }
+
+    //DeleteURL
+    public Long deleteURL(String shortURL) {
+        Long deletedCount = urlRepository.deleteByShortURL(shortURL);
+        return deletedCount;
+    }
+
+    //UpdateURL
+    public UpdateResult updateURL(URLRecord urlRecord) {
+        UpdateResult result;
+        try {
+            Query query = new Query();
+            query.addCriteria(Criteria.where("longURL").is(urlRecord.getLongURL()));
+
+            Update update = new Update();
+            update.set("shortURL", urlRecord.getShortURL()); //TODO
+            update.set("expirationDays", urlRecord.getExpirationDays());
+            update.set("redirects", 0);
+            update.set("status", "ACTIVE");
+            update.set("updatedAt", LocalDateTime.now());
+            update.set("expiresAt", LocalDateTime.now().plusDays(urlRecord.getExpirationDays()));
+
+            result = mongoTemplate.updateFirst(query, update, "urls");
+            return result;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    //CreateURL
+    public InsertOneResult createURL(URLRecord urlRecord) {
+        InsertOneResult result;
+        try {
+            result = mongoTemplate.getCollection("urls").insertOne(urlRecord.toDocument());
+            return result;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+
 }
