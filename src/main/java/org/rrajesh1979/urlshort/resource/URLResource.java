@@ -4,6 +4,7 @@ import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.result.UpdateResult;
 import org.bson.codecs.jsr310.LocalDateTimeCodec;
+import org.bson.types.ObjectId;
 import org.rrajesh1979.urlshort.model.URLRecord;
 import org.rrajesh1979.urlshort.service.URLService;
 import org.rrajesh1979.urlshort.utils.ShortenURL;
@@ -60,7 +61,7 @@ public class URLResource {
         Map<String, Object> response = new HashMap<>();
         if (url != null) {
             response.put("status", "success");
-            response.put("data", url.getLongURL());
+            response.put("data", url.longURL());
         } else {
             response.put("status", "URL not found");
         }
@@ -71,7 +72,7 @@ public class URLResource {
     public RedirectView redirectLongURL(@PathVariable String shortURL) {
         URLRecord url = urlService.findOneAndUpdate(shortURL);
         if (url != null) {
-            return new RedirectView(url.getLongURL());
+            return new RedirectView(url.longURL());
         } else {
             return new RedirectView("404 page"); //TODO
         }
@@ -95,14 +96,21 @@ public class URLResource {
 
     @PostMapping(value = "/", headers = ACCEPT_APPLICATION_JSON)
     public ResponseEntity<Map<String, Object>> createURL(@RequestBody URLRecord url) {
-        url.setCreatedAt(LocalDateTime.now());
-        url.setUpdatedAt(LocalDateTime.now());
-        url.setExpiresAt(LocalDateTime.now().plusDays(url.getExpirationDays()));
-        url.setStatus("ACTIVE");
-        url.setRedirects(0);
-        url.setShortURL(ShortenURL.shortenURL(url.getLongURL(), url.getUserID()));
 
-        InsertOneResult result = urlService.createURL(url);
+        URLRecord newURL = new URLRecord(
+                new ObjectId(),
+                url.longURL(),
+                ShortenURL.shortenURL(url.longURL(), url.userID()),
+                url.expirationDays(),
+                url.userID(),
+                "ACTIVE",
+                0,
+                LocalDateTime.now().plusDays(url.expirationDays()),
+                LocalDateTime.now(),
+                LocalDateTime.now()
+        );
+
+        InsertOneResult result = urlService.createURL(newURL);
         Map<String, Object> response = new HashMap<>();
         if (result != null) {
             response.put("status", "success");
@@ -117,13 +125,21 @@ public class URLResource {
 
     @PutMapping(value = "/", headers = ACCEPT_APPLICATION_JSON)
     public ResponseEntity<Map<String, Object>> updateURL(@RequestBody URLRecord url) {
-        url.setUpdatedAt(LocalDateTime.now());
-        url.setExpiresAt(LocalDateTime.now().plusDays(url.getExpirationDays()));
-        url.setStatus("ACTIVE");
-        url.setRedirects(0); //Reset redirects to 0
-        url.setShortURL(ShortenURL.shortenURL(url.getShortURL(), url.getUserID()));
 
-        UpdateResult result = urlService.updateURL(url);
+        URLRecord updatedURL = new URLRecord(
+                null,
+                url.longURL(),
+                ShortenURL.shortenURL(url.longURL(), url.userID()),
+                url.expirationDays(),
+                url.userID(),
+                null,
+                0,
+                null,
+                null,
+                null
+        );
+
+        UpdateResult result = urlService.updateURL(updatedURL);
         Map<String, Object> response = new HashMap<>();
         if (result == null) {
             response.put("status", "error");

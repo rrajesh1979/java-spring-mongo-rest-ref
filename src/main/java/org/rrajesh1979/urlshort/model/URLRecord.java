@@ -8,20 +8,18 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 
 @Document(collection = "urls")
-@Data
-public class URLRecord {
-    @Id ObjectId id;
-    String longURL;
-    String shortURL;
-    long expirationDays;
-    String userID;
-    String status;
-    long redirects;
-    LocalDateTime expiresAt;
-    LocalDateTime createdAt;
-    LocalDateTime updatedAt;
-
-    //toDocument
+public record URLRecord(
+        @Id ObjectId id,
+        String longURL,
+        String shortURL,
+        long expirationDays,
+        String userID,
+        String status,
+        long redirects,
+        LocalDateTime expiresAt,
+        LocalDateTime createdAt,
+        LocalDateTime updatedAt
+) {
     public org.bson.Document toDocument() {
         org.bson.Document urlDocument = new org.bson.Document();
         urlDocument.append("longURL", this.longURL);

@@ -90,15 +90,15 @@ public class URLService {
         UpdateResult result;
         try {
             Query query = new Query();
-            query.addCriteria(Criteria.where("longURL").is(urlRecord.getLongURL()));
+            query.addCriteria(Criteria.where("longURL").is(urlRecord.longURL()));
 
             Update update = new Update();
-            update.set("shortURL", urlRecord.getShortURL()); //TODO
-            update.set("expirationDays", urlRecord.getExpirationDays());
+            update.set("shortURL", urlRecord.shortURL()); //TODO
+            update.set("expirationDays", urlRecord.expirationDays());
             update.set("redirects", 0);
             update.set("status", "ACTIVE");
             update.set("updatedAt", LocalDateTime.now());
-            update.set("expiresAt", LocalDateTime.now().plusDays(urlRecord.getExpirationDays()));
+            update.set("expiresAt", LocalDateTime.now().plusDays(urlRecord.expirationDays()));
 
             result = mongoTemplate.updateFirst(query, update, "urls");
             return result;
