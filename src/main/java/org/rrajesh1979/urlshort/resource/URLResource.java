@@ -2,6 +2,7 @@ package org.rrajesh1979.urlshort.resource;
 
 import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.result.UpdateResult;
+import lombok.extern.log4j.Log4j2;
 import org.bson.types.ObjectId;
 import org.rrajesh1979.urlshort.model.URLRecord;
 import org.rrajesh1979.urlshort.service.URLService;
@@ -20,6 +21,7 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping( "${api.default.path}" )
+@Log4j2
 public class URLResource {
     private static final String ACCEPT_APPLICATION_JSON = "Accept=application/json";
 
@@ -40,6 +42,7 @@ public class URLResource {
 
     @GetMapping(value = "/", headers = ACCEPT_APPLICATION_JSON)
     public ResponseEntity<Map<String, Object>> getAllURLs(@RequestParam int page, @RequestParam int limit) {
+        log.info("getAllURLs called with page: {} and limit: {}", () -> page, () -> limit);
         List<URLRecord> urls = urlService.getAllURLs(page-1, limit);
         Map<String, Object> response = buildResponse(urls);
 
