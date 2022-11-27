@@ -51,6 +51,7 @@ public class URLResource {
 
     @GetMapping(value = "/{userID}", headers = ACCEPT_APPLICATION_JSON)
     public ResponseEntity<Map<String, Object>> getAllURLs(@PathVariable String userID, @RequestParam int page, @RequestParam int limit) {
+        log.info("getAllURLs called with userID: {}, page: {} and limit: {}", () -> userID, () -> page, () -> limit);
         List<URLRecord> urls = urlService.findURLsByUserID(userID, page-1, limit);
         Map<String, Object> response = buildResponse(urls);
 
@@ -59,6 +60,7 @@ public class URLResource {
 
     @GetMapping(value = "/get/{shortURL}", headers = ACCEPT_APPLICATION_JSON)
     public ResponseEntity<Map<String, Object>> getLongURL(@PathVariable String shortURL) {
+        log.info("getLongURL called with shortURL: {}", () -> shortURL);
         URLRecord url = urlService.findURLByShortURL(shortURL);
         Map<String, Object> response = new HashMap<>();
         if (url != null) {
@@ -72,6 +74,7 @@ public class URLResource {
 
     @GetMapping(value = "/redirect/{shortURL}", headers = ACCEPT_APPLICATION_JSON)
     public RedirectView redirectLongURL(@PathVariable String shortURL) {
+        log.info("redirectLongURL called with shortURL: {}", () -> shortURL);
         URLRecord url = urlService.findOneAndUpdate(shortURL);
         if (url != null) {
             return new RedirectView(url.longURL());
@@ -82,6 +85,7 @@ public class URLResource {
 
     @DeleteMapping(value = "/{shortURL}", headers = ACCEPT_APPLICATION_JSON)
     public ResponseEntity<Map<String, Object>> deleteURL(@PathVariable String shortURL) {
+        log.info("deleteURL called with shortURL: {}", () -> shortURL);
         Long deletedCount = urlService.deleteURL(shortURL);
         Map<String, Object> response = new HashMap<>();
         if (deletedCount == 0) {
@@ -98,7 +102,7 @@ public class URLResource {
 
     @PostMapping(value = "/", headers = ACCEPT_APPLICATION_JSON)
     public ResponseEntity<Map<String, Object>> createURL(@RequestBody URLRecord url) {
-
+        log.info("createURL called with longURL: {}", () -> url.longURL());
         URLRecord newURL = new URLRecord(
                 new ObjectId(),
                 url.longURL(),
@@ -127,7 +131,7 @@ public class URLResource {
 
     @PutMapping(value = "/", headers = ACCEPT_APPLICATION_JSON)
     public ResponseEntity<Map<String, Object>> updateURL(@RequestBody URLRecord url) {
-
+        log.info("updateURL called with shortURL: {}", () -> url.shortURL());
         URLRecord updatedURL = new URLRecord(
                 null,
                 url.longURL(),

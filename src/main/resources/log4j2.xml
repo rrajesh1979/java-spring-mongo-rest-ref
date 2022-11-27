@@ -1,7 +1,7 @@
 <Configuration status="DEBUG">
     <Appenders>
         <Console name="LogToConsole" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %highlight{%level : %msg%n}{FATAL=bg_red, ERROR=bright_red, WARN=bright_yellow, INFO=bright_green, DEBUG=bright_cyan}" />
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] ${spring:spring.application.name},[%X{traceId}/%X{spanId}] %highlight{%level : %msg%n}{FATAL=bg_red, ERROR=bright_red, WARN=bright_yellow, INFO=bright_green, DEBUG=bright_cyan}" />
         </Console>
         <File name="LogToFile" fileName="logs/application.log">
             <PatternLayout>
