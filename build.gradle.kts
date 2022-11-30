@@ -24,36 +24,22 @@ repositories {
 
 dependencies {
     //actuator
-    implementation("org.springframework.boot:spring-boot-starter-actuator") {
-        exclude(group = "org.springframework.boot", module = "spring-boot-starter-logging")
-    }
-    implementation("org.springframework.boot:spring-boot-starter-data-mongodb") {
-        exclude(group = "org.springframework.boot", module = "spring-boot-starter-logging")
-        exclude(group = "org.slf4j", module = "slf4j-api")
-    }
-    implementation("org.springframework.boot:spring-boot-starter-web") {
-        exclude(group = "org.springframework.boot", module = "spring-boot-starter-logging")
-    }
-    developmentOnly("org.springframework.boot:spring-boot-devtools"){
-        exclude(group = "org.springframework.boot", module = "spring-boot-starter-logging")
-    }
-    testImplementation("org.springframework.boot:spring-boot-starter-test"){
-        exclude(group = "org.springframework.boot", module = "spring-boot-starter-logging")
-    }
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 
     implementation("org.modelmapper:modelmapper:3.1.0")
-    implementation("com.google.guava:guava:31.1-jre") {
-        exclude(group = "org.slf4j", module = "slf4j-api")
-    }
+    implementation("com.google.guava:guava:31.1-jre")
     annotationProcessor("org.projectlombok:lombok")
     compileOnly("org.projectlombok:lombok")
 
-    implementation("org.springframework.boot:spring-boot-starter-log4j2:3.0.0")
+//    implementation("org.springframework.boot:spring-boot-starter-log4j2:3.0.0")
 
     testImplementation("org.testcontainers:testcontainers:1.17.6")
     testImplementation("org.testcontainers:junit-jupiter:1.17.6")
     testImplementation("org.testcontainers:mongodb:1.17.6")
-    testImplementation("org.springframework.boot:spring-boot-starter-log4j2:3.0.0")
 
 }
 

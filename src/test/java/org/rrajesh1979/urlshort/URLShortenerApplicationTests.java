@@ -46,9 +46,12 @@ class URLShortenerApplicationTests {
     @Autowired
     private URLRepository urlRepository;
 
-    @After
+    @Test
+    @Order(4)
     public void cleanUp() {
+        log.info("Cleaning up the database");
         this.urlRepository.deleteAll();
+        mongoDBContainer.close();
     }
 
     @Test
