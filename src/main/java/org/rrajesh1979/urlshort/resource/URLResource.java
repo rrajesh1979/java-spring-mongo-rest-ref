@@ -33,6 +33,7 @@ public class URLResource {
     }
 
     private static Map<String, Object> buildResponse(List<URLRecord> urls) {
+        log.info("buildResponse: urls={}", urls);
         Map<String, Object> response = new HashMap<>();
         response.put("data", urls);
         response.put("results", urls.size());
