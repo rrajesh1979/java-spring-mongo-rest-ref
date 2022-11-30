@@ -24,6 +24,10 @@ import java.util.Objects;
 @Log4j2
 public class URLResource {
     private static final String ACCEPT_APPLICATION_JSON = "Accept=application/json";
+    public static final String RESPONSE_STATUS = "status";
+    public static final String RESPONSE_RESULTS = "results";
+    public static final String RESPONSE_DATA = "data";
+    public static final String SUCCESS = "success";
 
     public final URLService urlService;
 
@@ -35,9 +39,9 @@ public class URLResource {
     private static Map<String, Object> buildResponse(List<URLRecord> urls) {
         log.info("buildResponse: urls={}", urls);
         Map<String, Object> response = new HashMap<>();
-        response.put("data", urls);
-        response.put("results", urls.size());
-        response.put("status", "success");
+        response.put(RESPONSE_DATA, urls);
+        response.put(RESPONSE_RESULTS, urls.size());
+        response.put(RESPONSE_STATUS, SUCCESS);
         return response;
     }
 
@@ -65,10 +69,10 @@ public class URLResource {
         URLRecord url = urlService.findURLByShortURL(shortURL);
         Map<String, Object> response = new HashMap<>();
         if (url != null) {
-            response.put("status", "success");
-            response.put("data", url.longURL());
+            response.put(RESPONSE_STATUS, "success");
+            response.put(RESPONSE_DATA, url.longURL());
         } else {
-            response.put("status", "URL not found");
+            response.put(RESPONSE_STATUS, "URL not found");
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -90,12 +94,12 @@ public class URLResource {
         Long deletedCount = urlService.deleteURL(shortURL);
         Map<String, Object> response = new HashMap<>();
         if (deletedCount == 0) {
-            response.put("status", "error");
-            response.put("data", "URL not found");
+            response.put(RESPONSE_STATUS, "error");
+            response.put(RESPONSE_DATA, "URL not found");
         } else {
-            response.put("status", "success");
-            response.put("result", deletedCount);
-            response.put("data", "URL deleted");
+            response.put(RESPONSE_STATUS, "success");
+            response.put(RESPONSE_RESULTS, deletedCount);
+            response.put(RESPONSE_DATA, "URL deleted");
         }
 
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -103,7 +107,7 @@ public class URLResource {
 
     @PostMapping(value = "/", headers = ACCEPT_APPLICATION_JSON)
     public ResponseEntity<Map<String, Object>> createURL(@RequestBody URLRecord url) {
-        log.info("createURL called with longURL: {}", () -> url.longURL());
+        log.info("createURL called with longURL: {}", url::longURL);
         URLRecord newURL = new URLRecord(
                 new ObjectId(),
                 url.longURL(),
@@ -120,11 +124,11 @@ public class URLResource {
         InsertOneResult result = urlService.createURL(newURL);
         Map<String, Object> response = new HashMap<>();
         if (result != null) {
-            response.put("status", "success");
-            response.put("data", Objects.requireNonNull(result.getInsertedId()).toString());
+            response.put(RESPONSE_STATUS, "success");
+            response.put(RESPONSE_DATA, Objects.requireNonNull(result.getInsertedId()).toString());
         } else {
-            response.put("status", "error");
-            response.put("data", "URL not created");
+            response.put(RESPONSE_STATUS, "error");
+            response.put(RESPONSE_DATA, "URL not created");
         }
 
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -132,7 +136,7 @@ public class URLResource {
 
     @PutMapping(value = "/", headers = ACCEPT_APPLICATION_JSON)
     public ResponseEntity<Map<String, Object>> updateURL(@RequestBody URLRecord url) {
-        log.info("updateURL called with shortURL: {}", () -> url.shortURL());
+        log.info("updateURL called with shortURL: {}", url::shortURL);
         URLRecord updatedURL = new URLRecord(
                 null,
                 url.longURL(),
@@ -149,12 +153,12 @@ public class URLResource {
         UpdateResult result = urlService.updateURL(updatedURL);
         Map<String, Object> response = new HashMap<>();
         if (result == null) {
-            response.put("status", "error");
-            response.put("data", "URL not found");
+            response.put(RESPONSE_STATUS, "error");
+            response.put(RESPONSE_DATA, "URL not found");
         } else {
-            response.put("status", "success");
-            response.put("result", result.getModifiedCount());
-            response.put("data", "URL updated");
+            response.put(RESPONSE_STATUS, "success");
+            response.put(RESPONSE_RESULTS, result.getModifiedCount());
+            response.put(RESPONSE_DATA, "URL updated");
         }
 
         return new ResponseEntity<>(response, HttpStatus.OK);
