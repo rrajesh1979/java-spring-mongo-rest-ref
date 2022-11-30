@@ -3,6 +3,7 @@ plugins {
     id("org.springframework.boot") version "3.0.0"
     id("io.spring.dependency-management") version "1.1.0"
     id("org.graalvm.buildtools.native") version "0.9.18"
+    id("jacoco")
     id("org.sonarqube") version "3.5.0.2730"
 }
 
@@ -53,5 +54,17 @@ sonarqube {
         property("sonar.projectKey", "rrajesh1979_java-spring-mongo-rest-ref")
         property("sonar.organization", "rrajesh1979")
         property("sonar.host.url", "https://sonarcloud.io")
+    }
+}
+
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
+}
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)   // tests are required to run before generating the report
+    reports {
+        xml.required.set(true)
+        csv.required.set(true)
+        html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
     }
 }
