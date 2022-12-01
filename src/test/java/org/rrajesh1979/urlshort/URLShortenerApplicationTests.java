@@ -1,5 +1,6 @@
 package org.rrajesh1979.urlshort;
 
+import com.mongodb.client.result.InsertOneResult;
 import org.bson.types.ObjectId;
 import org.junit.After;
 import org.junit.Before;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.rrajesh1979.urlshort.model.URLRecord;
 import org.rrajesh1979.urlshort.repository.URLRepository;
+import org.rrajesh1979.urlshort.service.URLService;
 import org.rrajesh1979.urlshort.utils.ShortenURL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
@@ -26,6 +28,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -46,16 +49,42 @@ class URLShortenerApplicationTests {
     @Autowired
     private URLRepository urlRepository;
 
-    @Test
-    @Order(4)
-    public void cleanUp() {
-        log.info("Cleaning up the database");
-        this.urlRepository.deleteAll();
-        mongoDBContainer.close();
+    private class URLTestRecord {
+        String userID;
+        String longURL;
+        String shortURL;
     }
 
     @Test
     @Order(1)
+    public void testShortenURL() {
+        //Array of UserID, LongURL, ShortURL
+        List<URLTestRecord> urlTestMatrix = new ArrayList<>();
+        urlTestMatrix.add(new URLTestRecord() {{
+            userID = "rrajesh1979";
+            longURL = "https://www.mongodb.com";
+            shortURL = "1DEE3F5";
+        }});
+
+        urlTestMatrix.add(new URLTestRecord() {{
+            userID = "rrajesh1979";
+            longURL = "https://www.github.com";
+            shortURL = "55nQArh";
+        }});
+
+        urlTestMatrix.add(new URLTestRecord() {{
+            userID = "rrajesh1979";
+            longURL = "https://www.yahoo.com";
+            shortURL = "1HCuGBS";
+        }});
+
+        for (URLTestRecord urlTestRecord : urlTestMatrix) {
+            assert (ShortenURL.shortenURL(urlTestRecord.longURL, urlTestRecord.userID).equals(urlTestRecord.shortURL));
+        }
+    }
+
+    @Test
+    @Order(2)
     public void testCreateURLs(){
         String userID = "rrajesh1979";
         String longURL1 = "https://www.google.com";
@@ -107,10 +136,11 @@ class URLShortenerApplicationTests {
         this.urlRepository.insert(newURL1);
         this.urlRepository.insert(newURL2);
         this.urlRepository.insert(newURL3);
+
     }
 
     @Test
-    @Order(2)
+    @Order(3)
     void testFindAllURLs() {
         Pageable paging = PageRequest.of(0, 5);
         Page<URLRecord> pageURLs = this.urlRepository.findAll(paging);
@@ -119,11 +149,20 @@ class URLShortenerApplicationTests {
     }
 
     @Test
-    @Order(3)
+    @Order(4)
     void testFindByShortURL() {
         log.info("testFindByShortURL");
         assert mongoDBContainer.isRunning();
         assert this.urlRepository.findByShortURL("1BtYYyQ").size() == 1;
+    }
+
+    //TODO: Can we use @After?
+    @Test
+    @Order(5)
+    public void cleanUp() {
+        log.info("Cleaning up the database");
+        this.urlRepository.deleteAll();
+        mongoDBContainer.close();
     }
 
 }
