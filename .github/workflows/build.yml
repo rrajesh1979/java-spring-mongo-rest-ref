@@ -1,4 +1,4 @@
-name: Java Spring REST Reference Application CI
+name: Build
 on:
   push:
     branches:

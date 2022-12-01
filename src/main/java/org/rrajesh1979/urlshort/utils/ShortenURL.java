@@ -21,30 +21,4 @@ public class ShortenURL {
         String shortURL = Base58.encode(urlHash.toByteArray());
         return shortURL.substring(0, 7); //TODO Error handling
     }
-
-    public static void main(String[] args) {
-        System.out.println("Short URL: " + shortenURL("https://www.mongodb.com", "rrajesh1979").substring(0, 7));
-        System.out.println("Short URL: " + shortenURL("https://www.github.com", "rrajesh1979").substring(0, 7));
-        System.out.println("Short URL: " + shortenURL("https://www.yahoo.com", "rrajesh1979").substring(0, 7));
-        System.out.println("Short URL: " + shortenURL("https://www.facebook.com", "rrajesh1979").substring(0, 7));
-        System.out.println("Short URL: " + shortenURL("https://www.google.com", "rrajesh1979").substring(0, 7));
-        System.out.println("\n");
-        System.out.println("Short URL: " + shortenURL("https://www.mongodb.com", "robert").substring(0, 7));
-        System.out.println("Short URL: " + shortenURL("https://www.github.com", "robert").substring(0, 7));
-        System.out.println("Short URL: " + shortenURL("https://www.yahoo.com", "robert").substring(0, 7));
-        System.out.println("Short URL: " + shortenURL("https://www.facebook.com", "robert").substring(0, 7));
-        System.out.println("Short URL: " + shortenURL("https://www.google.com", "robert").substring(0, 7));
-        System.out.println("\n");
-        System.out.println("Short URL: " + shortenURL("https://www.mongodb.com", "john").substring(0, 7));
-        System.out.println("Short URL: " + shortenURL("https://www.github.com", "john").substring(0, 7));
-        System.out.println("Short URL: " + shortenURL("https://www.yahoo.com", "john").substring(0, 7));
-        System.out.println("Short URL: " + shortenURL("https://www.facebook.com", "john").substring(0, 7));
-        System.out.println("Short URL: " + shortenURL("https://www.google.com", "john").substring(0, 7));
-        System.out.println("\n");
-        System.out.println("Short URL: " + shortenURL("https://www.mongodb.com", "johndoe").substring(0, 7));
-        System.out.println("Short URL: " + shortenURL("https://www.github.com", "johndoe").substring(0, 7));
-        System.out.println("Short URL: " + shortenURL("https://www.yahoo.com", "johndoe").substring(0, 7));
-        System.out.println("Short URL: " + shortenURL("https://www.facebook.com", "johndoe").substring(0, 7));
-        System.out.println("Short URL: " + shortenURL("https://www.google.com", "johndoe").substring(0, 7));
-    }
 }
