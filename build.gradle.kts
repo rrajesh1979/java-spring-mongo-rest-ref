@@ -42,6 +42,8 @@ dependencies {
     testImplementation("org.testcontainers:junit-jupiter:1.17.6")
     testImplementation("org.testcontainers:mongodb:1.17.6")
 
+    implementation("commons-codec:commons-codec:1.15")
+
 }
 
 tasks.withType<Test> {

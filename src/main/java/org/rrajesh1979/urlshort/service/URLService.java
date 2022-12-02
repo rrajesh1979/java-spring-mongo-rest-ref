@@ -29,6 +29,11 @@ public class URLService {
         this.mongoTemplate = mongoTemplate;
     }
 
+    public URLService() {
+        this.urlRepository = null;
+        this.mongoTemplate = null;
+    }
+
     public List<URLRecord> getAllURLs(int page, int limit) {
         List<URLRecord> urls = new ArrayList<>();
         try {
