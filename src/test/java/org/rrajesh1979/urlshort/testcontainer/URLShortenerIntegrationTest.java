@@ -183,5 +183,37 @@ public class URLShortenerIntegrationTest {
         log.info("End test testUpdateURL for shortURL 1");
     }
 
+    @Test
+    @Order(6)
+    @DisplayName("Should return total URLs in the repository along with the newly created URL")
+    void testCreateURL() {
+        log.info("Starting test testCreateURL for shortURL 1");
+        URLService urlService = new URLService(urlRepository, mongoTemplate);
+
+        URLRecord newURLRecord = new URLRecord(
+                new ObjectId(),
+                "https://www.apple.com",
+                ShortenURL.shortenURL("https://www.apple.com", "spring"),
+                235,
+                "spring",
+                "ACTIVE",
+                0,
+                LocalDateTime.now().plusDays(235),
+                LocalDateTime.now(),
+                LocalDateTime.now()
+        );
+
+        //Test for URL Not present in repository
+        Assertions.assertNull(urlService.findURLByShortURL("4oTPU74"));
+
+        //Create the URL
+        urlService.createURL(newURLRecord);
+
+        // Test for URL present in repository after creation
+        Assertions.assertEquals("https://www.apple.com", urlService.findURLByShortURL("4oTPU74").longURL());
+
+        log.info("End test testCreateURL for shortURL 1");
+    }
+
 
 }
