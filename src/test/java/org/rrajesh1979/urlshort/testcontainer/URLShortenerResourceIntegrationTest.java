@@ -215,5 +215,31 @@ public class URLShortenerResourceIntegrationTest {
         log.info("Test testUpdateURL complete");
     }
 
+    @Test
+    @Order(6)
+    void testDeleteURL() {
+        log.info("Test testDeleteURL started");
+
+        //Test for short URL that exists
+        ResponseEntity<Map<String, Object>>  response =
+                this.urlResource.deleteURL("1BtYYyQ");
+        log.info("Response: {}", response);
+
+        Assertions.assertEquals(200, response.getStatusCode().value());
+        Assertions.assertEquals("success", response.getBody().get("status"));
+        Assertions.assertEquals("URL deleted", response.getBody().get("data"));
+
+        //Test for short URL that does not exists
+        response =
+                this.urlResource.deleteURL("1BtYYyQ");
+        log.info("Response: {}", response);
+
+        Assertions.assertEquals(200, response.getStatusCode().value());
+        Assertions.assertEquals("error", response.getBody().get("status"));
+        Assertions.assertEquals("URL not found", response.getBody().get("data"));
+
+        log.info("Test testDeleteURL complete");
+    }
+
 
 }
