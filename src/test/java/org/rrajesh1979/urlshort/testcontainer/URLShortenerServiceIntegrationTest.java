@@ -24,8 +24,8 @@ import java.util.List;
 @Testcontainers
 @DataMongoTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class URLShortenerIntegrationTest {
-    private static final Logger log = LoggerFactory.getLogger(URLShortenerIntegrationTest.class);
+public class URLShortenerServiceIntegrationTest {
+    private static final Logger log = LoggerFactory.getLogger(URLShortenerServiceIntegrationTest.class);
 
     @Container
     static MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:6.0.1");

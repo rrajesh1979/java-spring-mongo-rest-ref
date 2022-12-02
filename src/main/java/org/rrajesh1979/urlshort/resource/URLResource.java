@@ -4,7 +4,9 @@ import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.result.UpdateResult;
 import lombok.extern.log4j.Log4j2;
 import org.bson.types.ObjectId;
+import org.rrajesh1979.urlshort.model.URLCreateRequest;
 import org.rrajesh1979.urlshort.model.URLRecord;
+import org.rrajesh1979.urlshort.model.URLUpdateRequest;
 import org.rrajesh1979.urlshort.service.URLService;
 import org.rrajesh1979.urlshort.utils.ShortenURL;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,7 +108,7 @@ public class URLResource {
     }
 
     @PostMapping(value = "/", headers = ACCEPT_APPLICATION_JSON)
-    public ResponseEntity<Map<String, Object>> createURL(@RequestBody URLRecord url) {
+    public ResponseEntity<Map<String, Object>> createURL(@RequestBody URLCreateRequest url) {
         log.info("createURL called with longURL: {}", url::longURL);
         URLRecord newURL = new URLRecord(
                 new ObjectId(),
@@ -135,8 +137,8 @@ public class URLResource {
     }
 
     @PutMapping(value = "/", headers = ACCEPT_APPLICATION_JSON)
-    public ResponseEntity<Map<String, Object>> updateURL(@RequestBody URLRecord url) {
-        log.info("updateURL called with shortURL: {}", url::shortURL);
+    public ResponseEntity<Map<String, Object>> updateURL(@RequestBody URLUpdateRequest url) {
+        log.info("updateURL called with longURL: {}", url::longURL);
         URLRecord updatedURL = new URLRecord(
                 null,
                 url.longURL(),
