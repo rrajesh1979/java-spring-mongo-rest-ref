@@ -3,6 +3,7 @@ package org.rrajesh1979.urlshort.resource;
 import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.result.UpdateResult;
 import lombok.extern.log4j.Log4j2;
+import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.rrajesh1979.urlshort.model.URLCreateRequest;
 import org.rrajesh1979.urlshort.model.URLRecord;
@@ -60,7 +61,11 @@ public class URLResource {
     public ResponseEntity<Map<String, Object>> getAllURLs(@PathVariable String userID, @RequestParam int page, @RequestParam int limit) {
         log.info("getAllURLs called with userID: {}, page: {} and limit: {}", () -> userID, () -> page, () -> limit);
         List<URLRecord> urls = urlService.getURLsByUserID(userID, page-1, limit);
-        Map<String, Object> response = buildResponse(urls);
+        log.info("getAllURLs: urls={}", urls);
+        Map<String, Object> response = new HashMap<>();
+        response.put(RESPONSE_DATA, urls);
+        response.put(RESPONSE_RESULTS, urls.size());
+        response.put(RESPONSE_STATUS, SUCCESS);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

@@ -2,6 +2,10 @@ package org.rrajesh1979.urlshort.service;
 
 import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.result.UpdateResult;
+import lombok.extern.slf4j.Slf4j;
+import org.bson.Document;
+import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 import org.rrajesh1979.urlshort.model.URLRecord;
 import org.rrajesh1979.urlshort.repository.URLRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +21,10 @@ import org.springframework.data.mongodb.core.query.Query;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class URLService {
     public final URLRepository urlRepository;
     public final MongoTemplate mongoTemplate;
