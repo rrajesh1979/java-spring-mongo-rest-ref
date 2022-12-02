@@ -119,4 +119,69 @@ public class URLShortenerIntegrationTest {
         log.info("End test testGetAllURLsForUser for user robert, page 0 and size 4");
     }
 
+    @Test
+    @Order(3)
+    @DisplayName("Should return LongURL for a given shortURL")
+    void testGetLongURL() {
+        log.info("Starting test testGetLongURL for shortURL 1");
+        URLService urlService = new URLService(urlRepository, mongoTemplate);
+
+        //Test for valid shortURL
+        Assertions.assertEquals("https://www.google.com", urlService.findURLByShortURL("1BtYYyQ").longURL());
+
+        //Test for invalid shortURL
+        Assertions.assertNull(urlService.findURLByShortURL("nonExistentShortURL"));
+
+        log.info("End test testGetLongURL for shortURL 1");
+    }
+
+    @Test
+    @Order(4)
+    @DisplayName("Should not return Deleted URL for a given shortURL")
+    void testGetDeletedURL() {
+        log.info("Starting test testGetDeletedURL for shortURL 1");
+        URLService urlService = new URLService(urlRepository, mongoTemplate);
+
+        //Test for valid shortURL
+        Assertions.assertEquals("https://www.google.com", urlService.findURLByShortURL("1BtYYyQ").longURL());
+
+        //Delete the URL
+        urlService.deleteURL("1BtYYyQ");
+
+        //Test for shortURL not present in repository
+        Assertions.assertNull(urlService.findURLByShortURL("1BtYYyQ"));
+
+        //Test the other URLs are still present
+        Assertions.assertEquals("https://www.yahoo.com", urlService.findURLByShortURL("1HCuGBS").longURL());
+
+        log.info("End test testGetDeletedURL for shortURL 1");
+    }
+
+    @Test
+    @Order(5)
+    @DisplayName("Should return confirmation message after updating URL")
+    void testUpdateURL() {
+        log.info("Starting test testUpdateURL for shortURL 1");
+        URLService urlService = new URLService(urlRepository, mongoTemplate);
+
+        URLRecord updatedURLRecord = new URLRecord(
+                new ObjectId(),
+                "https://www.google.com",
+                ShortenURL.shortenURL("https://www.google.com", "rrajesh1979"),
+                225,
+                "rrajesh1979",
+                "ACTIVE",
+                0,
+                LocalDateTime.now().plusDays(225),
+                LocalDateTime.now(),
+                LocalDateTime.now()
+        );
+
+        //Update the URL
+        Assertions.assertEquals(1, urlService.updateURL(updatedURLRecord).getModifiedCount());
+
+        log.info("End test testUpdateURL for shortURL 1");
+    }
+
+
 }
