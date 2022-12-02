@@ -57,7 +57,7 @@ public class URLResource {
     @GetMapping(value = "/{userID}", headers = ACCEPT_APPLICATION_JSON)
     public ResponseEntity<Map<String, Object>> getAllURLs(@PathVariable String userID, @RequestParam int page, @RequestParam int limit) {
         log.info("getAllURLs called with userID: {}, page: {} and limit: {}", () -> userID, () -> page, () -> limit);
-        List<URLRecord> urls = urlService.findURLsByUserID(userID, page-1, limit);
+        List<URLRecord> urls = urlService.getURLsByUserID(userID, page-1, limit);
         Map<String, Object> response = buildResponse(urls);
 
         return new ResponseEntity<>(response, HttpStatus.OK);

@@ -1,4 +1,4 @@
-package org.rrajesh1979.urlshort.resource;
+package org.rrajesh1979.urlshort.mocks.resource;
 
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.DisplayName;
@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.rrajesh1979.urlshort.model.URLRecord;
+import org.rrajesh1979.urlshort.resource.URLResource;
 import org.rrajesh1979.urlshort.service.URLService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,5 +1,6 @@
-package org.rrajesh1979.urlshort.service;
+package org.rrajesh1979.urlshort.mocks.service;
 
+import com.mongodb.client.result.InsertOneResult;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,20 +10,20 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.rrajesh1979.urlshort.model.URLRecord;
 import org.rrajesh1979.urlshort.repository.URLRepository;
+import org.rrajesh1979.urlshort.service.URLService;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class URLServiceTest {
+class URLServiceTestMachinet {
     @Mock
     private URLRepository urlRepository;
     @Mock
@@ -30,6 +31,27 @@ class URLServiceTest {
 
     @InjectMocks
     private URLService urlService;
+
+    @Test
+    @DisplayName("Should return null when the urlrecord is invalid")
+    void createURLWhenUrlRecordIsInvalidThenReturnNull() {
+        URLRecord urlRecord =
+                new URLRecord(
+                        new ObjectId(),
+                        "https://www.google.com",
+                        "shortURL",
+                        30,
+                        "user1",
+                        "ACTIVE",
+                        0,
+                        LocalDateTime.now().plusDays(30),
+                        LocalDateTime.now(),
+                        LocalDateTime.now());
+
+        InsertOneResult result = urlService.createURL(urlRecord);
+
+        assertNull(result);
+    }
 
     @Test
     @DisplayName("Should return null when the shorturl is not found")
