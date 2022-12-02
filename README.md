@@ -1,4 +1,4 @@
-# java-spring-mongo-rest-ref
+# Java Spring MongoDB REST API Reference
 
 ## Build Status
 [![Build](https://github.com/rrajesh1979/java-spring-mongo-rest-ref/actions/workflows/build.yml/badge.svg)](https://github.com/rrajesh1979/java-spring-mongo-rest-ref/actions/workflows/build.yml) 
