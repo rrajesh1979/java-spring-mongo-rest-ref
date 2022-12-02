@@ -38,8 +38,7 @@ class URLResourceTest {
         ResponseEntity<Map<String, Object>> response = urlResource.getLongURL(shortURL);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals("error", response.getBody().get(URLResource.RESPONSE_STATUS));
-        assertEquals("URL not found", response.getBody().get(URLResource.RESPONSE_DATA));
+        assertEquals("URL not found", response.getBody().get(URLResource.RESPONSE_STATUS));
     }
 
     @Test
