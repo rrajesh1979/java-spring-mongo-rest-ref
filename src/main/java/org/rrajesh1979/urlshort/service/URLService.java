@@ -2,10 +2,8 @@ package org.rrajesh1979.urlshort.service;
 
 import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.result.UpdateResult;
+import io.micrometer.observation.annotation.Observed;
 import lombok.extern.slf4j.Slf4j;
-import org.bson.Document;
-import org.bson.conversions.Bson;
-import org.bson.types.ObjectId;
 import org.rrajesh1979.urlshort.model.URLRecord;
 import org.rrajesh1979.urlshort.repository.URLRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +19,15 @@ import org.springframework.data.mongodb.core.query.Query;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Random;
 
 @Service
 @Slf4j
 public class URLService {
     public final URLRepository urlRepository;
     public final MongoTemplate mongoTemplate;
+
+    private final Random random = new Random();
 
     @Autowired
     public URLService(URLRepository urlRepository, MongoTemplate mongoTemplate) {
@@ -49,15 +49,27 @@ public class URLService {
     }
 
     //FindURLsByUserID
+    @Observed(name = "shortURL_byUserID",
+            contextualName = "getting-short-url-by-user-id",
+            lowCardinalityKeyValues = {"shortURL", "userID"})
     public List<URLRecord> getURLsByUserID(String userID, int page, int limit) {
         List<URLRecord> urls = new ArrayList<>();
         try {
             Pageable paging = PageRequest.of(page, limit);
             urls = urlRepository.findByUserID(userID, paging);
-            return urls;
+
         } catch (Exception e) {
-            return urls;
+            log.error("Error while getting shortURLs by userID: {}", userID, e);
         }
+
+        try {
+            Thread.sleep(random.nextLong(200L)); // simulates latency
+        }
+        catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return urls;
     }
 
     //FindURLByShortURL

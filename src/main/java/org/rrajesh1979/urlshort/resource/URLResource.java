@@ -2,8 +2,7 @@ package org.rrajesh1979.urlshort.resource;
 
 import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.result.UpdateResult;
-import lombok.extern.log4j.Log4j2;
-import org.bson.Document;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.rrajesh1979.urlshort.model.URLCreateRequest;
 import org.rrajesh1979.urlshort.model.URLRecord;
@@ -24,7 +23,7 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping( "${api.default.path}" )
-@Log4j2
+@Slf4j
 public class URLResource {
     private static final String ACCEPT_APPLICATION_JSON = "Accept=application/json";
     public static final String RESPONSE_STATUS = "status";
@@ -50,7 +49,7 @@ public class URLResource {
 
     @GetMapping(value = "/", headers = ACCEPT_APPLICATION_JSON)
     public ResponseEntity<Map<String, Object>> getAllURLs(@RequestParam int page, @RequestParam int limit) {
-        log.info("getAllURLs called with page: {} and limit: {}", () -> page, () -> limit);
+        log.info("getAllURLs called with page: {} and limit: {}", page, limit);
         List<URLRecord> urls = urlService.getAllURLs(page-1, limit);
         Map<String, Object> response = buildResponse(urls);
 
@@ -59,7 +58,7 @@ public class URLResource {
 
     @GetMapping(value = "/{userID}", headers = ACCEPT_APPLICATION_JSON)
     public ResponseEntity<Map<String, Object>> getAllURLs(@PathVariable String userID, @RequestParam int page, @RequestParam int limit) {
-        log.info("getAllURLs called with userID: {}, page: {} and limit: {}", () -> userID, () -> page, () -> limit);
+        log.info("getAllURLs called with userID: {}, page: {} and limit: {}", userID, page, limit);
         List<URLRecord> urls = urlService.getURLsByUserID(userID, page-1, limit);
         log.info("getAllURLs: urls={}", urls);
         Map<String, Object> response = new HashMap<>();
@@ -72,7 +71,7 @@ public class URLResource {
 
     @GetMapping(value = "/get/{shortURL}", headers = ACCEPT_APPLICATION_JSON)
     public ResponseEntity<Map<String, Object>> getLongURL(@PathVariable String shortURL) {
-        log.info("getLongURL called with shortURL: {}", () -> shortURL);
+        log.info("getLongURL called with shortURL: {}", shortURL);
         URLRecord url = urlService.findURLByShortURL(shortURL);
         Map<String, Object> response = new HashMap<>();
         if (url != null) {
@@ -86,7 +85,7 @@ public class URLResource {
 
     @GetMapping(value = "/redirect/{shortURL}", headers = ACCEPT_APPLICATION_JSON)
     public RedirectView redirectLongURL(@PathVariable String shortURL) {
-        log.info("redirectLongURL called with shortURL: {}", () -> shortURL);
+        log.info("redirectLongURL called with shortURL: {}", shortURL);
         URLRecord url = urlService.findOneAndUpdate(shortURL);
         if (url != null) {
             return new RedirectView(url.longURL());
@@ -97,7 +96,7 @@ public class URLResource {
 
     @DeleteMapping(value = "/{shortURL}", headers = ACCEPT_APPLICATION_JSON)
     public ResponseEntity<Map<String, Object>> deleteURL(@PathVariable String shortURL) {
-        log.info("deleteURL called with shortURL: {}", () -> shortURL);
+        log.info("deleteURL called with shortURL: {}", shortURL);
         Long deletedCount = urlService.deleteURL(shortURL);
         Map<String, Object> response = new HashMap<>();
         if (deletedCount == 0) {
@@ -114,7 +113,7 @@ public class URLResource {
 
     @PostMapping(value = "/", headers = ACCEPT_APPLICATION_JSON)
     public ResponseEntity<Map<String, Object>> createURL(@RequestBody URLCreateRequest url) {
-        log.info("createURL called with longURL: {}", url::longURL);
+        log.info("createURL called with longURL: {}", url.longURL());
         URLRecord newURL = new URLRecord(
                 new ObjectId(),
                 url.longURL(),
@@ -143,7 +142,7 @@ public class URLResource {
 
     @PutMapping(value = "/", headers = ACCEPT_APPLICATION_JSON)
     public ResponseEntity<Map<String, Object>> updateURL(@RequestBody URLUpdateRequest url) {
-        log.info("updateURL called with longURL: {}", url::longURL);
+        log.info("updateURL called with longURL: {}", url.longURL());
         URLRecord updatedURL = new URLRecord(
                 null,
                 url.longURL(),
