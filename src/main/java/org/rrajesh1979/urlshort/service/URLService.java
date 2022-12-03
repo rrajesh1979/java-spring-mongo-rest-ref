@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.rrajesh1979.urlshort.model.URLRecord;
 import org.rrajesh1979.urlshort.repository.URLRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -73,6 +74,7 @@ public class URLService {
     }
 
     //FindURLByShortURL
+    @Cacheable(value = "url", key = "#shortURL")
     public URLRecord findURLByShortURL(String shortURL) {
         List<URLRecord> urls;
         try {

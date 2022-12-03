@@ -48,6 +48,9 @@ dependencies {
     implementation("io.zipkin.reporter2:zipkin-reporter-brave:2.16.3")
     implementation("com.github.loki4j:loki-logback-appender:1.4.0-rc1")
 
+    //Caching related
+    implementation("org.springframework.boot:spring-boot-starter-cache")
+
 }
 
 tasks.withType<Test> {
