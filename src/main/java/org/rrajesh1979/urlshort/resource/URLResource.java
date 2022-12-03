@@ -39,7 +39,6 @@ public class URLResource {
     }
 
     private static Map<String, Object> buildResponse(List<URLRecord> urls) {
-        log.info("buildResponse: urls={}", urls);
         Map<String, Object> response = new HashMap<>();
         response.put(RESPONSE_DATA, urls);
         response.put(RESPONSE_RESULTS, urls.size());
@@ -60,7 +59,6 @@ public class URLResource {
     public ResponseEntity<Map<String, Object>> getAllURLs(@PathVariable String userID, @RequestParam int page, @RequestParam int limit) {
         log.info("getAllURLs called with userID: {}, page: {} and limit: {}", userID, page, limit);
         List<URLRecord> urls = urlService.getURLsByUserID(userID, page-1, limit);
-        log.info("getAllURLs: urls={}", urls);
         Map<String, Object> response = new HashMap<>();
         response.put(RESPONSE_DATA, urls);
         response.put(RESPONSE_RESULTS, urls.size());
