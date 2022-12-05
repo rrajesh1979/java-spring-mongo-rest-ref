@@ -1,3 +1,5 @@
+import org.gradle.internal.classpath.Instrumented.systemProperty
+
 plugins {
     java
     id("org.springframework.boot") version "3.0.0"
@@ -5,11 +7,22 @@ plugins {
     id("org.graalvm.buildtools.native") version "0.9.18"
     id("jacoco")
     id("org.sonarqube") version "3.5.0.2730"
+
+    //jib to build container image
+    id("com.google.cloud.tools.jib") version "3.3.1"
 }
 
 group = "org.rrajesh1979"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
+jib {
+    to {
+        image = "registry.hub.docker.com/rrajesh1979/url-shortener"
+    }
+    container {
+        ports = listOf("8000")
+    }
+}
 
 val wavefrontVersion = "2.3.1"
 
@@ -76,4 +89,16 @@ tasks.jacocoTestReport {
         csv.required.set(true)
         html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
     }
+}
+
+//Custom Gradle Task which sets "spring.profiles.active" as "container"
+//TODO: Fix this. Need to find a better way to use custom profile
+tasks.register("jibCustom") {
+    group = "jib"
+    doFirst {
+        tasks.jib.configure {
+            systemProperty("spring.profiles.active", "container", "jib")
+        }
+    }
+    finalizedBy(tasks.jib)
 }

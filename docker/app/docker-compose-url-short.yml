@@ -1,0 +1,15 @@
+services:
+    url-short:
+        image: registry.hub.docker.com/rrajesh1979/url-shortener
+        ports:
+        - "8000:8000"
+        links:
+        - mongo_db:mongo_db
+        environment:
+        - DB_NAME=reference
+        depends_on:
+        - mongo_db
+    mongo_db:
+        image: mongo:6.0.1
+        ports:
+        - "27017:27017"
