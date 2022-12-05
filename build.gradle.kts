@@ -21,6 +21,7 @@ jib {
     }
     container {
         ports = listOf("8000")
+        jvmFlags = listOf("-Dspring.profiles.active=container")
     }
 }
 
@@ -64,6 +65,9 @@ dependencies {
     //Caching related
     implementation("org.springframework.boot:spring-boot-starter-cache")
 
+    //OpenAPI related
+    implementation("org.springdoc:springdoc-openapi-ui:1.6.4")
+
 }
 
 tasks.withType<Test> {
@@ -93,6 +97,9 @@ tasks.jacocoTestReport {
 
 //Custom Gradle Task which sets "spring.profiles.active" as "container"
 //TODO: Fix this. Need to find a better way to use custom profile
+//The container jvmFlags is working.
+// I don't believe the below doFirst configuration is required.
+// Need to test.
 tasks.register("jibCustom") {
     group = "jib"
     doFirst {
