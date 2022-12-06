@@ -65,9 +65,10 @@ dependencies {
     //Caching related
     implementation("org.springframework.boot:spring-boot-starter-cache")
 
-    //OpenAPI related
+    //OpenAPI related - use springdoc-openapi-starter-webmvc-ui instead of springdoc-openapi-ui t
+    //to work with Spring Boot 3.0.0
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.0")
-//    implementation("org.springdoc:springdoc-openapi-ui:1.6.13")
+    //implementation("org.springdoc:springdoc-openapi-ui:1.6.13")
 
 }
 
