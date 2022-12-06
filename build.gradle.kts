@@ -66,7 +66,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-cache")
 
     //OpenAPI related
-    implementation("org.springdoc:springdoc-openapi-ui:1.6.4")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.0")
+//    implementation("org.springdoc:springdoc-openapi-ui:1.6.13")
 
 }
 

@@ -2,6 +2,12 @@ package org.rrajesh1979.urlshort.resource;
 
 import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.result.UpdateResult;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.rrajesh1979.urlshort.model.URLCreateRequest;
@@ -47,6 +53,45 @@ public class URLResource {
     }
 
     @GetMapping(value = "/", headers = ACCEPT_APPLICATION_JSON)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "List of all URLs",
+                    content = {
+                        @Content(
+                            mediaType = "application/json",
+                            examples = {
+                                @ExampleObject(
+                                    name = "urls",
+                                    value = """
+                                            {
+                                            	"data": [
+                                            		{
+                                            			"id": {
+                                            				"timestamp": 1669221663,
+                                            				"date": "2022-11-23T16:41:03.000+00:00"
+                                            			},
+                                            			"longURL": "https://www.mongodb.com/docs/drivers/go/current/quick-start/",
+                                            			"shortURL": "6E2XtLa9",
+                                            			"expirationDays": 10,
+                                            			"userID": "rrajesh1979",
+                                            			"status": "ACTIVE",
+                                            			"redirects": 0,
+                                            			"expiresAt": "2022-12-03T11:41:03.132",
+                                            			"createdAt": "2022-11-23T11:41:03.132",
+                                            			"updatedAt": "2022-11-23T11:41:03.132"
+                                            		}
+                                            	],
+                                            	"results": 1,
+                                            	"status": "success"
+                                            }
+                                            """
+                                )
+                            }
+                        )
+                    }
+            ),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error")
+    })
     public ResponseEntity<Map<String, Object>> getAllURLs(@RequestParam int page, @RequestParam int limit) {
         log.info("getAllURLs called with page: {} and limit: {}", page, limit);
         List<URLRecord> urls = urlService.getAllURLs(page-1, limit);
@@ -68,6 +113,45 @@ public class URLResource {
     }
 
     @GetMapping(value = "/get/{shortURL}", headers = ACCEPT_APPLICATION_JSON)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "URL Record",
+                    content = {
+                        @Content(
+                            mediaType = "application/json",
+                            examples = {
+                                @ExampleObject(
+                                    name = "url",
+                                    value = """
+                                            {
+                                             	"data": "https://www.docker.com",
+                                             	"status": "success"
+                                             }
+                                            """
+                                )
+                            }
+                        )
+                    }
+            ),
+            @ApiResponse(responseCode = "404", description = "URL Not Found",
+                    content = {
+                        @Content(
+                            mediaType = "application/json",
+                            examples = {
+                                @ExampleObject(
+                                    name = "url",
+                                    value = """
+                                            {
+                                                "status": "URL Not Found"
+                                            }
+                                            """
+                                )
+                            }
+                        )
+                    }
+            ),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error")
+    })
     public ResponseEntity<Map<String, Object>> getLongURL(@PathVariable String shortURL) {
         log.info("getLongURL called with shortURL: {}", shortURL);
         URLRecord url = urlService.findURLByShortURL(shortURL);
@@ -75,10 +159,12 @@ public class URLResource {
         if (url != null) {
             response.put(RESPONSE_STATUS, "success");
             response.put(RESPONSE_DATA, url.longURL());
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             response.put(RESPONSE_STATUS, "URL not found");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(response, HttpStatus.OK);
+
     }
 
     @GetMapping(value = "/redirect/{shortURL}", headers = ACCEPT_APPLICATION_JSON)

@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -161,7 +162,7 @@ public class URLShortenerResourceIntegrationTest {
         response = this.urlResource.getLongURL("doesNotExist");
         log.info("Response: {}", response);
 
-        Assertions.assertEquals(200, response.getStatusCode().value());
+        Assertions.assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatusCode().value());
         Assertions.assertEquals("URL not found", response.getBody().get("status"));
 
         log.info("Test testGetURLByShortURL complete");
