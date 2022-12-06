@@ -67,7 +67,7 @@ public class URLService {
             Thread.sleep(random.nextLong(200L)); // simulates latency
         }
         catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            log.error("Error while getting shortURLs by userID: {}", userID, e);
         }
 
         return urls;
