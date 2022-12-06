@@ -70,6 +70,9 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.0")
     //implementation("org.springdoc:springdoc-openapi-ui:1.6.13")
 
+    //Rate Limiting related
+    implementation("com.github.vladimir-bukhtoyarov:bucket4j-core:7.6.0")
+
 }
 
 tasks.withType<Test> {

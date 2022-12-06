@@ -2,6 +2,10 @@ package org.rrajesh1979.urlshort.resource;
 
 import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.result.UpdateResult;
+import io.github.bucket4j.Bandwidth;
+import io.github.bucket4j.Bucket;
+import io.github.bucket4j.Bucket4j;
+import io.github.bucket4j.Refill;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -21,6 +25,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +36,7 @@ import java.util.Objects;
 @RequestMapping( "${api.default.path}" )
 @Slf4j
 public class URLResource {
+    private final Bucket bucket;
     private static final String ACCEPT_APPLICATION_JSON = "Accept=application/json";
     public static final String RESPONSE_STATUS = "status";
     public static final String RESPONSE_RESULTS = "results";
@@ -42,6 +48,14 @@ public class URLResource {
     @Autowired
     public URLResource(URLService urlService) {
         this.urlService = urlService;
+
+        //Simple Rate Limiting
+        //Allow 5 requests per minute
+        //TODO: Make this configurable. Refactor.
+        Bandwidth limit = Bandwidth.simple(5, Duration.ofMinutes(1));
+        this.bucket = Bucket.builder()
+                .addLimit(limit)
+                .build();
     }
 
     private static Map<String, Object> buildResponse(List<URLRecord> urls) {
@@ -93,11 +107,14 @@ public class URLResource {
             @ApiResponse(responseCode = "500", description = "Internal Server Error")
     })
     public ResponseEntity<Map<String, Object>> getAllURLs(@RequestParam int page, @RequestParam int limit) {
-        log.info("getAllURLs called with page: {} and limit: {}", page, limit);
-        List<URLRecord> urls = urlService.getAllURLs(page-1, limit);
-        Map<String, Object> response = buildResponse(urls);
+        if (bucket.tryConsume(1)) {
+            log.info("getAllURLs called with page: {} and limit: {}", page, limit);
+            List<URLRecord> urls = urlService.getAllURLs(page - 1, limit);
+            Map<String, Object> response = buildResponse(urls);
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+        return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build();
     }
 
     @GetMapping(value = "/{userID}", headers = ACCEPT_APPLICATION_JSON)
