@@ -36,7 +36,7 @@ This is a URL shortener REST API.
   - Spring Data
 - [X] MongoDB is used as the database
 - [X] Bucket4j is used for rate limiting
-  - Alternative using Resilience4j TBD
+  - [ ] Alternative using Resilience4j TBD
 - [X] Spring Cache is used for caching
 - [X] Gradle is used for dependency management
 - [X] Swagger UI for API documentation
@@ -44,11 +44,13 @@ This is a URL shortener REST API.
   - JUnit 5 tests
   - Mockito for mocking
   - Testcontainers for integration tests
+  - [ ] Testing URL Redirect TBD
 - [X] Quality Assurance
   - Jacoco for test coverage
   - SonarQube for code quality analysis
 - [X] CI/CD
-  - GitHub Actions
+  - [X] GitHub Actions
+  - [ ] Security scanning using Snyk
 - [X] Containerization & Deployment
   - Docker
   - Docker Compose
@@ -68,6 +70,7 @@ This is a URL shortener REST API.
   - `./gradlew jibCustom`
 - Run the application in Docker
   - `docker-compose up`
+  - This will bring up the application and MongoDB
 
 ## Usage
 - Swagger UI
