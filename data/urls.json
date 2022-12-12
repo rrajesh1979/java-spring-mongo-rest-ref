@@ -1,0 +1,426 @@
+[{
+  "_id": {
+    "$oid": "637e4d1f22c564191c9abda3"
+  },
+  "longURL": "https://www.mongodb.com/docs/drivers/go/current/quick-start/",
+  "shortURL": "6E2XtLa9",
+  "expirationDays": 10,
+  "status": "ACTIVE",
+  "expiresAt": {
+    "$date": {
+      "$numberLong": "1670085663132"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1669221663132"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1669221663132"
+    }
+  },
+  "userID": "rrajesh1979",
+  "redirects": 1
+},{
+  "_id": {
+    "$oid": "637e4d4622c564191c9abda4"
+  },
+  "longURL": "https://github.com/swaggo/swag/blob/master/.github/workflows/ci.yml",
+  "shortURL": "L4gu2N7M",
+  "expirationDays": 15,
+  "status": "ACTIVE",
+  "expiresAt": {
+    "$date": {
+      "$numberLong": "1670530269575"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1669221702477"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1669234269575"
+    }
+  },
+  "userID": "rrajesh1979",
+  "redirects": 0
+},{
+  "_id": {
+    "$oid": "637e6c32bc80bb80249efd14"
+  },
+  "longURL": "https://github.com/swaggo/swag/blob/master/.github/workflows/ci.yml",
+  "shortURL": "8RqZtPL1",
+  "expirationDays": 30,
+  "status": "ACTIVE",
+  "expiresAt": {
+    "$date": {
+      "$numberLong": "1671821618071"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1669229618071"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1669229618071"
+    }
+  },
+  "userID": "janedoe",
+  "redirects": 0
+},{
+  "_id": {
+    "$oid": "637e6c36bc80bb80249efd15"
+  },
+  "longURL": "https://github.com/swaggo/swag/blob/master/.github/workflows/ci.yml",
+  "shortURL": "Je4Tmdwf",
+  "expirationDays": 30,
+  "status": "ACTIVE",
+  "expiresAt": {
+    "$date": {
+      "$numberLong": "1671821622516"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1669229622516"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1669229622516"
+    }
+  },
+  "userID": "johndoe",
+  "redirects": 0
+},{
+  "_id": {
+    "$oid": "637e7c94a807bebe3f5faa77"
+  },
+  "longURL": "https://github.com/swaggo/swag/blob/master/.github/workflows/ci.yml",
+  "shortURL": "L4gu2N7M",
+  "expirationDays": 25,
+  "userID": "robert",
+  "status": "ACTIVE",
+  "expiresAt": {
+    "$date": {
+      "$numberLong": "1671490977551"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1669233812384"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1669330977551"
+    }
+  },
+  "redirects": 0
+},{
+  "_id": {
+    "$oid": "637e9fbbd88a5415ab93f607"
+  },
+  "longURL": "http://localhost:8000/api/v1/swagger/index.html#/default/post_",
+  "shortURL": "ZxhsmJFg",
+  "expirationDays": 20,
+  "userID": "swagger",
+  "status": "ACTIVE",
+  "expiresAt": {
+    "$date": {
+      "$numberLong": "1670970811661"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1669242811661"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1669242811661"
+    }
+  },
+  "redirects": 0
+},{
+  "_id": {
+    "$oid": "637fefd8145be70a230d8406"
+  },
+  "longURL": "https://www.mongodb.com",
+  "shortURL": "bZs6fy9V",
+  "expirationDays": 30,
+  "userID": "rrajesh1979",
+  "status": "ACTIVE",
+  "expiresAt": {
+    "$date": {
+      "$numberLong": "1671920856833"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1669328856833"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1669328856833"
+    }
+  },
+  "redirects": 0
+},{
+  "_id": {
+    "$oid": "637fefdf145be70a230d8407"
+  },
+  "longURL": "https://www.mongodb.com",
+  "shortURL": "ZZ5V6khX",
+  "expirationDays": 30,
+  "userID": "johndoe",
+  "status": "ACTIVE",
+  "expiresAt": {
+    "$date": {
+      "$numberLong": "1671920863495"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1669328863495"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1669328863495"
+    }
+  },
+  "redirects": 0
+},{
+  "_id": {
+    "$oid": "6382353e5508782811d25332"
+  },
+  "longURL": "https://www.yahoo.com",
+  "shortURL": "1AUtRjn",
+  "expirationDays": 15,
+  "userID": "spring",
+  "status": "ACTIVE",
+  "redirects": 0,
+  "expiresAt": {
+    "$date": {
+      "$numberLong": "1670755694044"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1669459694044"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1669459694044"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "638235485508782811d25333"
+  },
+  "longURL": "https://www.google.com",
+  "shortURL": "1GVmLm8",
+  "expirationDays": 15,
+  "userID": "spring",
+  "status": "ACTIVE",
+  "redirects": 0,
+  "expiresAt": {
+    "$date": {
+      "$numberLong": "1670755704706"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1669459704706"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1669459704706"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "638237595508782811d25335"
+  },
+  "longURL": "https://www.twitter.com",
+  "shortURL": "1EfSgZc",
+  "expirationDays": 44,
+  "userID": "spring",
+  "status": "ACTIVE",
+  "redirects": 0,
+  "expiresAt": {
+    "$date": {
+      "$numberLong": "1673279860617"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1669460233503"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1669478260617"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "638238293d8f1036ab7d07ca"
+  },
+  "longURL": "https://www.twitter.com",
+  "shortURL": "7A4ZD5R",
+  "expirationDays": 15,
+  "userID": "spring",
+  "status": "ACTIVE",
+  "redirects": 5,
+  "expiresAt": {
+    "$date": {
+      "$numberLong": "1670756441278"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1669460441278"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1669460441278"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "63825b4a694daa45953bd301"
+  },
+  "longURL": "https://www.harrypotter.com",
+  "shortURL": "agCpUZBw",
+  "expirationDays": 123,
+  "userID": "spring",
+  "status": "ACTIVE",
+  "redirects": 0,
+  "expiresAt": {
+    "$date": {
+      "$numberLong": "1680300465887"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1669469434120"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1669673265887"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "6383899fd99b9e0757d98447"
+  },
+  "longURL": "https://www.apple.com",
+  "shortURL": "4oTPU74",
+  "expirationDays": 15,
+  "userID": "spring",
+  "status": "ACTIVE",
+  "redirects": 0,
+  "expiresAt": {
+    "$date": {
+      "$numberLong": "1670842831874"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1669546831874"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1669546831874"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "638777377a56882093732732"
+  },
+  "longURL": "https://www.google.com",
+  "shortURL": "1BtYYyQ",
+  "expirationDays": 15,
+  "userID": "rrajesh1979",
+  "status": "ACTIVE",
+  "redirects": 0,
+  "expiresAt": {
+    "$date": {
+      "$numberLong": "1671100263434"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1669804263434"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1669804263434"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "638a033e1e03f62ab1c50264"
+  },
+  "longURL": "https://www.yahoo.com",
+  "shortURL": "1HCuGBS",
+  "expirationDays": 15,
+  "userID": "rrajesh1979",
+  "status": "ACTIVE",
+  "redirects": 0,
+  "expiresAt": {
+    "$date": {
+      "$numberLong": "1671267182714"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1669971182714"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1669971182714"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "638a25fe5c86b35279adbe1b"
+  },
+  "longURL": "https://www.testing.com",
+  "shortURL": "8kC1GSF",
+  "expirationDays": 123,
+  "userID": "rrajesh1979",
+  "status": "ACTIVE",
+  "redirects": 0,
+  "expiresAt": {
+    "$date": {
+      "$numberLong": "1680625679973"
+    }
+  },
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1669980078252"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1669998479973"
+    }
+  }
+}]
