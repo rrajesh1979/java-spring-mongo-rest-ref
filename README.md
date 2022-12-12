@@ -19,7 +19,7 @@ This is a simple URL Shortener App.
 ![GitHub issues](https://img.shields.io/github/issues/rrajesh1979/java-spring-mongo-rest-ref)
 ![GitHub contributors](https://img.shields.io/github/contributors/rrajesh1979/java-spring-mongo-rest-ref)
 ![GitHub watchers](https://img.shields.io/github/watchers/rrajesh1979/java-spring-mongo-rest-ref)
-![Known Vulnerabilities](https://snyk.io/test/github/rrajesh1979/java-spring-mongo-rest-ref/badge.svg)
+[![Check for vulnerabilities using Snyk](https://github.com/rrajesh1979/java-spring-mongo-rest-ref/actions/workflows/security.yml/badge.svg)](https://github.com/rrajesh1979/java-spring-mongo-rest-ref/actions/workflows/security.yml)
 
 [Key Features](#key-features) •
 [Getting Started](#getting-started) •
