@@ -1,0 +1,197 @@
+_type: export
+__export_format: 4
+__export_date: 2022-12-12T10:45:47.004Z
+__export_source: insomnia.desktop.app:v2022.6.0
+resources:
+  - _id: req_e88713aedae44820979f5fa302902685
+    parentId: wrk_7047ceedb6164b4ab7e0b1aa9598662d
+    modified: 1670285659386
+    created: 1669221403406
+    url: "{{ _.baseUrl }}/?page=1&limit=1"
+    name: Get All URLs
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1669221403406
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: wrk_7047ceedb6164b4ab7e0b1aa9598662d
+    parentId: null
+    modified: 1669221365796
+    created: 1669221365796
+    name: URL Shortener
+    description: ""
+    scope: collection
+    _type: workspace
+  - _id: req_b570234eb19f4f2184f33751911c395e
+    parentId: wrk_7047ceedb6164b4ab7e0b1aa9598662d
+    modified: 1670019864949
+    created: 1669229563798
+    url: "{{ _.baseUrl }}/rrajesh1979?page=1&limit=5"
+    name: Get URLs for UserID
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1669209415408.75
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_e17f087b657d4680a54265259cbee256
+    parentId: wrk_7047ceedb6164b4ab7e0b1aa9598662d
+    modified: 1670291682154
+    created: 1669425520421
+    url: "{{ _.baseUrl }}/get/6E2XtLa9"
+    name: Get LongURL
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1669206418409.4375
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_2fbba18b9da641cc9ea68c30700ecc40
+    parentId: wrk_7047ceedb6164b4ab7e0b1aa9598662d
+    modified: 1670181298503
+    created: 1669232950009
+    url: "{{ _.baseUrl }}/1J5VQje"
+    name: Delete by shortURL
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1669203421410.125
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_c1905b5014b6417f93da8c526343c709
+    parentId: wrk_7047ceedb6164b4ab7e0b1aa9598662d
+    modified: 1670276346144
+    created: 1669221473691
+    url: "{{ _.baseUrl }}/"
+    name: Create URL
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "expirationDays": 15,
+          "longURL": "https://www.docker.com",
+          "userID": "rrajesh1979"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication: {}
+    metaSortKey: -1669197427411.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_9c2cd514a62b4a7ebb1efcf926cbfc43
+    parentId: wrk_7047ceedb6164b4ab7e0b1aa9598662d
+    modified: 1669998899296
+    created: 1669475352767
+    url: "{{ _.baseUrl }}/"
+    name: Update URL PUT
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "expirationDays": 123,
+          "longURL": "https://www.testing.com",
+          "userID": "rrajesh1979"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication: {}
+    metaSortKey: -1669179445415.625
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: env_10986bb515eae83aad0fa9e0ad52ba88b65779b6
+    parentId: wrk_7047ceedb6164b4ab7e0b1aa9598662d
+    modified: 1669221369081
+    created: 1669221365822
+    name: Base Environment
+    data: {}
+    dataPropertyOrder: {}
+    color: null
+    isPrivate: false
+    metaSortKey: 1669221365822
+    _type: environment
+  - _id: jar_10986bb515eae83aad0fa9e0ad52ba88b65779b6
+    parentId: wrk_7047ceedb6164b4ab7e0b1aa9598662d
+    modified: 1669221365824
+    created: 1669221365824
+    name: Default Jar
+    cookies: []
+    _type: cookie_jar
+  - _id: spc_28021cfc507443a097a0e6fb8a13be90
+    parentId: wrk_7047ceedb6164b4ab7e0b1aa9598662d
+    modified: 1669221365803
+    created: 1669221365803
+    fileName: URL Shortener
+    contents: ""
+    contentType: yaml
+    _type: api_spec
+  - _id: env_a502901488824308bd8bf45b27bb3d73
+    parentId: env_10986bb515eae83aad0fa9e0ad52ba88b65779b6
+    modified: 1669229603905
+    created: 1669221374641
+    name: URL Shortener
+    data:
+      baseUrl: http://localhost:8000/api/v1
+    dataPropertyOrder:
+      "&":
+        - baseUrl
+    color: null
+    isPrivate: false
+    metaSortKey: 1669221374641
+    _type: environment
