@@ -38,6 +38,8 @@ public class URLResource {
     public static final String RESPONSE_RESULTS = "results";
     public static final String RESPONSE_DATA = "data";
     public static final String SUCCESS = "success";
+    public static final String ERROR = "error";
+    public static final String URL_NOT_FOUND = "URL not found";
 
     public final URLService urlService;
 
@@ -170,11 +172,11 @@ public class URLResource {
         URLRecord url = urlService.findURLByShortURL(shortURL);
         Map<String, Object> response = new HashMap<>();
         if (url != null) {
-            response.put(RESPONSE_STATUS, "success");
+            response.put(RESPONSE_STATUS, SUCCESS);
             response.put(RESPONSE_DATA, url.longURL());
             return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
-            response.put(RESPONSE_STATUS, "URL not found");
+            response.put(RESPONSE_STATUS, URL_NOT_FOUND);
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
 
@@ -197,10 +199,10 @@ public class URLResource {
         Long deletedCount = urlService.deleteURL(shortURL);
         Map<String, Object> response = new HashMap<>();
         if (deletedCount == 0) {
-            response.put(RESPONSE_STATUS, "error");
-            response.put(RESPONSE_DATA, "URL not found");
+            response.put(RESPONSE_STATUS, ERROR);
+            response.put(RESPONSE_DATA, URL_NOT_FOUND);
         } else {
-            response.put(RESPONSE_STATUS, "success");
+            response.put(RESPONSE_STATUS, SUCCESS);
             response.put(RESPONSE_RESULTS, deletedCount);
             response.put(RESPONSE_DATA, "URL deleted");
         }
@@ -227,10 +229,10 @@ public class URLResource {
         InsertOneResult result = urlService.createURL(newURL);
         Map<String, Object> response = new HashMap<>();
         if (result != null) {
-            response.put(RESPONSE_STATUS, "success");
+            response.put(RESPONSE_STATUS, SUCCESS);
             response.put(RESPONSE_DATA, Objects.requireNonNull(result.getInsertedId()).toString());
         } else {
-            response.put(RESPONSE_STATUS, "error");
+            response.put(RESPONSE_STATUS, ERROR);
             response.put(RESPONSE_DATA, "URL not created");
         }
 
@@ -256,10 +258,10 @@ public class URLResource {
         UpdateResult result = urlService.updateURL(updatedURL);
         Map<String, Object> response = new HashMap<>();
         if (result == null) {
-            response.put(RESPONSE_STATUS, "error");
-            response.put(RESPONSE_DATA, "URL not found");
+            response.put(RESPONSE_STATUS, ERROR);
+            response.put(RESPONSE_DATA, URL_NOT_FOUND);
         } else {
-            response.put(RESPONSE_STATUS, "success");
+            response.put(RESPONSE_STATUS, SUCCESS);
             response.put(RESPONSE_RESULTS, result.getModifiedCount());
             response.put(RESPONSE_DATA, "URL updated");
         }

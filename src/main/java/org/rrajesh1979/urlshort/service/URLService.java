@@ -17,6 +17,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 import org.springframework.data.mongodb.core.query.Query;
 
+import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +28,6 @@ import java.util.Random;
 public class URLService {
     public final URLRepository urlRepository;
     public final MongoTemplate mongoTemplate;
-
-    private final Random random = new Random();
 
     @Autowired
     public URLService(URLRepository urlRepository, MongoTemplate mongoTemplate) {
