@@ -1,0 +1,46 @@
+version: '2.1'
+
+services:
+
+  prometheus:
+    image: prom/prometheus:latest
+#    network_mode: host
+    container_name: prometheus-container
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - "9090:9090"
+    restart: always
+
+  grafana:
+    image: grafana/grafana-oss:latest
+    user: "$UID:$GID"
+#    network_mode: host
+    container_name: grafana-container
+    depends_on:
+      - prometheus
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./grafana/:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SERVER_DOMAIN=localhost
+
+  url-short:
+    image: registry.hub.docker.com/rrajesh1979/url-shortener
+    ports:
+      - "8000:8000"
+    links:
+      - mongo_db:mongo_db
+    environment:
+      - DB_NAME=reference
+    depends_on:
+      - mongo_db
+
+  mongo_db:
+    image: mongo:6.0.1
+    ports:
+      - "27017:27017"
