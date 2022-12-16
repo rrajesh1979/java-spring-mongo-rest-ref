@@ -21,4 +21,5 @@ public class ShortenURL {
         String shortURL = Base58.encode(urlHash.toByteArray());
         return shortURL.substring(0, 7); //TODO Error handling
     }
+
 }
