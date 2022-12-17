@@ -4,6 +4,7 @@ import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.result.UpdateResult;
 import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
+import io.micrometer.core.annotation.Timed;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -104,6 +105,7 @@ public class URLResource {
             ),
             @ApiResponse(responseCode = "500", description = "Internal Server Error")
     })
+    @Timed(value = "url.all.time", description = "Time taken to return all URLs")
     public ResponseEntity<Map<String, Object>> getAllURLs(@RequestParam int page, @RequestParam int limit) {
         if (bucket.tryConsume(1)) {
             log.info("getAllURLs called with page: {} and limit: {}", page, limit);
@@ -116,6 +118,7 @@ public class URLResource {
     }
 
     @GetMapping(value = "/{userID}", headers = ACCEPT_APPLICATION_JSON)
+    @Timed(value = "url.user.time", description = "Time taken to return all URLs for a user")
     public ResponseEntity<Map<String, Object>> getAllURLs(@PathVariable String userID, @RequestParam int page, @RequestParam int limit) {
         log.info("getAllURLs called with userID: {}, page: {} and limit: {}", userID, page, limit);
         List<URLRecord> urls = urlService.getURLsByUserID(userID, page-1, limit);
@@ -167,6 +170,7 @@ public class URLResource {
             ),
             @ApiResponse(responseCode = "500", description = "Internal Server Error")
     })
+    @Timed(value = "url.long.time", description = "Time taken to return Long URL for a short URL")
     public ResponseEntity<Map<String, Object>> getLongURL(@PathVariable String shortURL) {
         log.info("getLongURL called with shortURL: {}", shortURL);
         URLRecord url = urlService.findURLByShortURL(shortURL);
@@ -183,6 +187,7 @@ public class URLResource {
     }
 
     @GetMapping(value = "/redirect/{shortURL}", headers = ACCEPT_APPLICATION_JSON)
+    @Timed(value = "url.redirect.time", description = "Time taken to redirect to Long URL for a short URL")
     public RedirectView redirectLongURL(@PathVariable String shortURL) {
         log.info("redirectLongURL called with shortURL: {}", shortURL);
         URLRecord url = urlService.findOneAndUpdate(shortURL);
@@ -194,6 +199,7 @@ public class URLResource {
     }
 
     @DeleteMapping(value = "/{shortURL}", headers = ACCEPT_APPLICATION_JSON)
+    @Timed(value = "url.delete.time", description = "Time taken to delete a URL")
     public ResponseEntity<Map<String, Object>> deleteURL(@PathVariable String shortURL) {
         log.info("deleteURL called with shortURL: {}", shortURL);
         Long deletedCount = urlService.deleteURL(shortURL);
@@ -211,6 +217,7 @@ public class URLResource {
     }
 
     @PostMapping(value = "/", headers = ACCEPT_APPLICATION_JSON)
+    @Timed(value = "url.create.time", description = "Time taken to create a URL")
     public ResponseEntity<Map<String, Object>> createURL(@RequestBody URLCreateRequest url) {
         log.info("createURL called with longURL: {}", url.longURL());
         URLRecord newURL = new URLRecord(
@@ -240,6 +247,7 @@ public class URLResource {
     }
 
     @PutMapping(value = "/", headers = ACCEPT_APPLICATION_JSON)
+    @Timed(value = "url.update.time", description = "Time taken to update a URL")
     public ResponseEntity<Map<String, Object>> updateURL(@RequestBody URLUpdateRequest url) {
         log.info("updateURL called with longURL: {}", url.longURL());
         URLRecord updatedURL = new URLRecord(
