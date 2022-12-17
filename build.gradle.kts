@@ -15,6 +15,11 @@ plugins {
 group = "org.rrajesh1979"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_17
+
+//compileJava {
+//    options.compilerArgs << '-parameters'
+//}
+
 jib {
     to {
         image = "registry.hub.docker.com/rrajesh1979/url-shortener"
@@ -57,7 +62,7 @@ dependencies {
     //Observability related
     implementation("org.springframework.boot:spring-boot-starter-aop")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("io.micrometer:micrometer-registry-prometheus:1.10.2")
+    runtimeOnly("io.micrometer:micrometer-registry-prometheus:1.10.2")
     implementation("io.micrometer:micrometer-tracing-bridge-brave:1.0.0")
     implementation("io.zipkin.reporter2:zipkin-reporter-brave:2.16.3")
     implementation("com.github.loki4j:loki-logback-appender:1.4.0-rc1")
@@ -77,6 +82,10 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.withType<JavaCompile> {
+    options.compilerArgs.add("-parameters")
 }
 
 //Sonar config
